@@ -8,3 +8,5 @@ from .models import Meeting
 
 class MeetingListView(ListView):
     model = Meeting
+    template_name = 'friendgroups/meetings.html'
+

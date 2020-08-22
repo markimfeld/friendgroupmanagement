@@ -23,7 +23,7 @@ class Category(models.Model):
 class Person(models.Model):
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
-    phone = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100, blank=True, null=True)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
@@ -39,6 +39,9 @@ class Meeting(models.Model):
     tithe = models.FloatField()
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     person = models.ManyToManyField(Person, through='Attendance')
+
+    def __str__(self):
+        return self.group.name
 
 
 class Attendance(models.Model):
