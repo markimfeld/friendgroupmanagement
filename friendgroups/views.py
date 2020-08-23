@@ -14,6 +14,7 @@ from .models import (
 class MeetingListView(ListView):
     model = Meeting
     template_name = 'friendgroups/meetings.html'
+    queryset = Meeting.objects.all().order_by('-date')
 
 
 class MeetingDetailView(DetailView):
