@@ -1,7 +1,7 @@
 {% extends 'friendgroups/base.html' %}
 
 {% block page-title-header %}
-    Encuentros
+    {{ object }}
 {% endblock page-title-header%}
 
 {% block content %}
@@ -10,21 +10,27 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        {% for meeting in object_list %}
         <div class="card">
           <div class="card-body">
-              <h5 class="card-title text-bold">{{ meeting.topic }}</h5>
+              <h5 class="card-title text-bold">{{ object.topic }}</h5>
 
             <p class="card-text">
-                {{ meeting.date }}
+                {{ object.date }}
             </p>
 
-            <a href="{% url 'friendgroups:meeting-detail' meeting.id %}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+            <ul class="list-group mb-3">
+                <li class="list-group-item active">Asistencia</li>
+                {% for member in object.members.all %}
+                    <li class="list-group-item">
+                        {{ member }}
+                    </li>
+                {% endfor %}
+            </ul>
+
             <a href="#" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i></a>
             <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
           </div>
         </div>
-        {% endfor %}
       </div>
     </div>
     <!-- /.row -->

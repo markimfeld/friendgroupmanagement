@@ -5,10 +5,7 @@ from django.db import models
 class Group(models.Model):
     name = models.CharField(max_length=100)
     
-
-    def __str__(self):
-        return self.name
-
+def __str__(self): return self.name 
 
 class Category(models.Model):
     name = models.CharField(max_length=64)
@@ -41,10 +38,13 @@ class Meeting(models.Model):
     person = models.ManyToManyField(Person, through='Attendance')
 
     def __str__(self):
-        return self.group.name
+        return self.topic
 
 
 class Attendance(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, related_name="members")
     is_present = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.person.first_name
