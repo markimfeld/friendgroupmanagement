@@ -43,7 +43,7 @@ class Meeting(models.Model):
 
 class Attendance(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, related_name="members")
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, related_name="attendances")
     is_present = models.BooleanField(default=False)
 
     def __str__(self):

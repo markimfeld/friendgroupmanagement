@@ -20,9 +20,9 @@
 
             <ul class="list-group mb-3">
                 <li class="list-group-item active">Asistencia</li>
-                {% for member in object.members.all %}
+                {% for attendance in object.attendances.all %}
                     <li class="list-group-item">
-                        {{ member }}
+                        {{ attendance }}
                     </li>
                 {% endfor %}
             </ul>
