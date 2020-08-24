@@ -18,14 +18,30 @@
                 {{ object.date }}
             </p>
 
-            <ul class="list-group mb-3">
-                <li class="list-group-item active">Asistencia</li>
-                {% for attendance in object.attendances.all %}
-                    <li class="list-group-item">
-                        {{ attendance }}
-                    </li>
-                {% endfor %}
-            </ul>
+            <table class="table table-bordered mb-3">
+                <thead>
+                    <tr>
+                        <th style="width: 10px">ID</th>
+                        <th>Nombre</th>
+                        <th>Progress</th>
+                        <th style="width: 40px">Asistencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for attendance in object.attendances.all %}
+                    <tr>
+                        <td>{{ attendance.id }}</td>
+                        <td>{{ attendance }}</td>
+                        <td>
+                            <div class="progress progress-xs">
+                                <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                            </div>
+                        </td>
+                        <td><span class="badge bg-danger">55%</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
             <a href="#" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i></a>
             <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
