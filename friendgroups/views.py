@@ -1,3 +1,4 @@
+from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import DeleteView
 from django.views.generic.detail import DetailView
@@ -27,9 +28,8 @@ class MeetingDetailView(DetailView):
 class MeetingDeleteView(DeleteView):
     model = Meeting
     template_name = 'friendgroups/meeting-delete.html'
+    success_url = reverse_lazy('friendgroups:index')
 
-    def get_success_url(self):
-        return HttpResponseRedirect(reverse('friendgroups:index'))
 
 class PersonListView(ListView):
     model = Person
