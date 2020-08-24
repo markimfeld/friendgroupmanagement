@@ -6,7 +6,7 @@
 
 {% block page-header %}
     <h1 class="m-0 text-dark d-inline">Miembros</h1>
-    <a class="btn btn-success float-right" href="#"><i class="fas fa-user-plus"></i> Nuevo Miembro</a>
+    <a class="btn btn-success float-right" href="{% url 'friendgroups:member-add' %}"><i class="fas fa-user-plus"></i> Nuevo Miembro</a>
 {% endblock page-header%}
 
 
@@ -55,7 +55,7 @@
                                 <a href="#" class="btn btn-sm btn-secondary">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="#" class="btn btn-sm btn-danger">
+                                <a href="{% url 'friendgroups:member-delete' member.id %}" class="btn btn-sm btn-danger">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </div>

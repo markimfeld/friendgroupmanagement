@@ -1,0 +1,53 @@
+
+{% extends 'friendgroups/base.html' %}
+
+{% load static %}
+
+{% block page-header %}
+    <h1 class="m-0 text-dark d-inline">Nuevo Miembro</h1>
+{% endblock page-header%}
+
+
+{% block content %}
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="card card-solid">
+        <div class="card-body pb-0">
+            <div class="row d-flex align-items-stretch">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card bg-light">
+                        <div class="card-header text-muted border-bottom-0">
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col">
+                                    <form method="post" role="form">
+                                        {% csrf_token %}
+                                        <div class="card-body">
+                                            {{ form }}
+                                        </div>
+                                        <!-- /.card-body -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">Crear Nuevo Miembro</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        </div>
+        <!-- /.card-footer -->
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+{% endblock content %}
