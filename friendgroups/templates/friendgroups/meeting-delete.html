@@ -1,0 +1,30 @@
+{% extends 'friendgroups/base.html' %}
+
+{% block page-title-header %}
+    {{ object }}
+{% endblock page-title-header%}
+
+{% block content %}
+<!-- Main content -->
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+
+            <form method="post">{% csrf_token %}
+                <p>Are you sure you want to delete "<b>{{ object }}</b>"?</p>
+                <button type="submit" class="btn btn-danger"><i class="fas fa-arrow-right"></i> Confirmar</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+
+{% endblock content %}
