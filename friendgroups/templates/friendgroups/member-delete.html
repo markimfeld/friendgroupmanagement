@@ -12,7 +12,6 @@
       <div class="col">
         <div class="card">
           <div class="card-body">
-
             <form method="post">{% csrf_token %}
                 <p>Are you sure you want to delete "<b>{{ object }}</b>"?</p>
                 <a class="btn btn-secondary" href="{% url 'friendgroups:members' %}">Cancelar</a>
