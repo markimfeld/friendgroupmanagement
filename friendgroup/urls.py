@@ -13,11 +13,24 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
 from django.urls import path, include
+from django.shortcuts import render
+
+def response_error_handler(request, exception=None):
+    return render(request, '403.html')
+
+def permission_denied_view(request):
+    raise PermissionDenied
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('friendgroups.urls')),
-    path('accounts/', include('accounts.urls'))
+    path('accounts/', include('accounts.urls')),
+    path('403/', permission_denied_view)
 ]
+
+handler403 = response_error_handler

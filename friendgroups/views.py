@@ -1,4 +1,5 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -50,7 +51,8 @@ class PersonListView(ListView):
 
 
 @method_decorator(login_required, name='dispatch')
-class PersonCreateView(CreateView):
+class PersonCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'friendgroups.can_add_person'
     model = Person
     template_name = 'friendgroups/member-add.html'
     form_class = PersonForm
@@ -58,7 +60,8 @@ class PersonCreateView(CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class PersonUpdateView(UpdateView):
+class PersonUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'friendgroups.can_edit_person'
     model = Person
     template_name = 'friendgroups/member-edit.html'
     form_class = PersonForm
@@ -66,7 +69,8 @@ class PersonUpdateView(UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class PersonDeleteView(DeleteView):
+class PersonDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'friendgroups.can_delete_person'
     model = Person
     template_name = 'friendgroups/member-delete.html'
     success_url = reverse_lazy('friendgroups:members')

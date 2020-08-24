@@ -55,7 +55,7 @@ ROOT_URLCONF = 'friendgroup.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,3 +124,4 @@ STATIC_URL = '/static/'
 
 
 LOGIN_URL = 'accounts/login/'
+
