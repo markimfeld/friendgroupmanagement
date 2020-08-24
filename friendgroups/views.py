@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import (
@@ -21,6 +23,7 @@ from .models import (
 )
 
 
+@method_decorator(login_required, name='dispatch')
 class MeetingListView(ListView):
     model = Meeting
     template_name = 'friendgroups/meetings.html'
