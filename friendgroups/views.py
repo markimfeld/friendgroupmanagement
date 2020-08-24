@@ -30,22 +30,26 @@ class MeetingListView(ListView):
     queryset = Meeting.objects.all().order_by('-date')
 
 
+@method_decorator(login_required, name='dispatch')
 class MeetingDetailView(DetailView):
     model = Meeting
     template_name = 'friendgroups/meeting-detail.html'
 
 
+@method_decorator(login_required, name='dispatch')
 class MeetingDeleteView(DeleteView):
     model = Meeting
     template_name = 'friendgroups/meeting-delete.html'
     success_url = reverse_lazy('friendgroups:index')
 
 
+@method_decorator(login_required, name='dispatch')
 class PersonListView(ListView):
     model = Person
     template_name = 'friendgroups/members.html'
 
 
+@method_decorator(login_required, name='dispatch')
 class PersonCreateView(CreateView):
     model = Person
     template_name = 'friendgroups/member-add.html'
@@ -53,6 +57,7 @@ class PersonCreateView(CreateView):
     success_url = reverse_lazy('friendgroups:members')
 
 
+@method_decorator(login_required, name='dispatch')
 class PersonUpdateView(UpdateView):
     model = Person
     template_name = 'friendgroups/member-edit.html'
@@ -60,6 +65,7 @@ class PersonUpdateView(UpdateView):
     success_url = reverse_lazy('friendgroups:members')
 
 
+@method_decorator(login_required, name='dispatch')
 class PersonDeleteView(DeleteView):
     model = Person
     template_name = 'friendgroups/member-delete.html'
