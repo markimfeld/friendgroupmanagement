@@ -42,6 +42,7 @@ class AttendanceInline(InlineFormSetFactory):
     }
 
 
+@method_decorator(login_required, name='dispatch')
 class MeetingCreateView(CreateWithInlinesView):
     model = Meeting
     inlines = [AttendanceInline]
