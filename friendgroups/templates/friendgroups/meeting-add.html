@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load widget_tweaks %}
+
 {% block header-plugins %}
     {% include 'friendgroups/partials/tempusdominus.html' %}
 {% endblock header-plugins %}
@@ -19,9 +21,7 @@
         <div class="card-body pb-0">
             <div class="row d-flex align-items-stretch">
                 <div class="col-12">
-                    <div class="card bg-light">
-                        <div class="card-header text-muted border-bottom-0">
-                        </div>
+                    <div class="card bg-light"> <div class="card-header text-muted border-bottom-0"> </div>
                         <div class="card-body pt-0">
                             <div class="row">
                                 <div class="col">
@@ -57,9 +57,16 @@
                                                 </div>
                                             </div>
 
-                                            <div class="from-group">
-                                                <label for="id_{{ form.topic.name }}">Tema:</label>
-                                                {{ form.topic }}
+                                            <div class="row">
+                                                <div class="col from-group">
+                                                    <label for="id_{{ form.topic.name }}">Tema:</label>
+                                                    {{ form.topic }}
+                                                </div>
+
+                                                <div class="col from-group">
+                                                    <label for="id_{{ form.group.name }}">Grupo:</label>
+                                                    {{ form.group }}
+                                                </div>
                                             </div>
 
                                             <div class="row">
@@ -75,7 +82,33 @@
                                             </div>
 
                                             {% for formset in inlines %}
-                                                {{ formset }}
+                                                {{ form.errors }}
+                                                {{ formset.management_form }}
+                                                <div class="row">
+                                                    {% for form in formset %}
+                                                        {% for hidden in form.hidden_fields %}
+                                                            {{ hidden }}
+                                                        {% endfor %}
+                                                        <div class="col-12">
+                                                            <div class="row">
+                                                                <div class="col-9 form-group">
+                                                                    <label for="id_{{ form.person.name }}">Amigo:</label>
+                                                                    {{ form.person|add_class:"form-control select2bs4" }}
+                                                                </div>
+                                                                <div class="col form-group">
+                                                                    {{ form.is_present }}
+                                                                    <label for="id_{{ form.is_present.name }}">Presente?</label>
+                                                                </div>
+                                                                <div class="col form-group">
+                                                                    {% if formset.can_delete %}
+                                                                    {{ form.DELETE }}
+                                                                    <label for="id_{{ form.can_delete.name }}">¿Borrar?</label>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
                                             {% endfor %}
                                         </div>
                                         <!-- /.card-body -->

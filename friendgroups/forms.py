@@ -39,6 +39,11 @@ class MeetingForm(forms.ModelForm):
                     'class': 'form-control',
                     'min': 0
                 }
+            ),
+            'group': forms.Select(
+                attrs = {
+                    'class': 'form-control select2bs4'
+                }
             )
         }
 

@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'accounts',
     'friendgroups',
     'extra_views',
+    'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

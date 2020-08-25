@@ -36,15 +36,18 @@ class MeetingListView(ListView):
 class AttendanceInline(InlineFormSetFactory):
     model = Attendance
     fields = ['person', 'is_present']
+    factory_kwargs = {
+        'extra': 4,
+        'can_delete': True
+    }
 
 
 class MeetingCreateView(CreateWithInlinesView):
     model = Meeting
     inlines = [AttendanceInline]
     form_class = MeetingForm
-    # fields = ['date', 'hour', 'topic', 'offering', 'tithe', 'group']
     template_name = 'friendgroups/meeting-add.html'
-    success_url = reverse_lazy('friendgroups:meetings')
+    success_url = reverse_lazy('friendgroups:index')
 
 
 @method_decorator(login_required, name='dispatch')

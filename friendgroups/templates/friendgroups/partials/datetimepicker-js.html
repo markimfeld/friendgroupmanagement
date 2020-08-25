@@ -1,4 +1,6 @@
 {% load static %}
+<!-- Select2 -->
+<script src="{% static 'friendgroups/plugins/select2/js/select2.full.min.js' %}"></script>
 <!-- InputMask -->
 <script src="{% static 'friendgroups/plugins/moment/moment.min.js' %}"></script>
 <script src="{% static 'friendgroups/plugins/inputmask/min/jquery.inputmask.bundle.min.js' %}"></script>
@@ -9,14 +11,21 @@
 
 <script>
     $(document).ready(() => {
+
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+          theme: 'bootstrap4'
+        })
+
         //Date range picker
         $('#reservationdate').datetimepicker({
-            format: 'L'
+            format: 'DD/MM/YYYY'
         });
 
         //Timepicker
         $('#timepicker').datetimepicker({
-          format: 'LT'
+          format: 'HH:mm:ss'
         })
     })
 </script>
