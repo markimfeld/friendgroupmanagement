@@ -1,0 +1,110 @@
+{% extends 'friendgroups/base.html' %}
+
+{% load static %}
+
+{% block header-plugins %}
+    {% include 'friendgroups/partials/tempusdominus.html' %}
+{% endblock header-plugins %}
+
+{% block page-header %}
+    <h1 class="m-0 text-dark d-inline">Nuevo Encuentro</h1>
+{% endblock page-header%}
+
+
+{% block content %}
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="card card-solid">
+        <div class="card-body pb-0">
+            <div class="row d-flex align-items-stretch">
+                <div class="col-12">
+                    <div class="card bg-light">
+                        <div class="card-header text-muted border-bottom-0">
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col">
+                                    <form method="post" role="form">
+                                        {% csrf_token %}
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <!-- Date -->
+                                                <div class="col-12 col-md-6 form-group">
+                                                    <label for="id_{{ form.date.name }}">Fecha:</label>
+                                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                                        {{ form.date }}
+                                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- time Picker -->
+                                                <div class="col-12 col-md-6 bootstrap-timepicker">
+                                                    <div class="form-group">
+                                                        <label for="id_{{ form.hour.name }}">Horario:</label>
+
+                                                        <div class="input-group date" id="timepicker" data-target-input="nearest">
+                                                            {{ form.hour }}
+                                                            <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
+                                                                <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.input group -->
+                                                    </div>
+                                                    <!-- /.form group -->
+                                                </div>
+                                            </div>
+
+                                            <div class="from-group">
+                                                <label for="id_{{ form.topic.name }}">Tema:</label>
+                                                {{ form.topic }}
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12 col-md-6 from-group">
+                                                    <label for="id_{{ form.offering.name }}">Ofrenda:</label>
+                                                    {{ form.offering }}
+                                                </div>
+
+                                                <div class="col-12 col-md-6 from-group">
+                                                    <label for="id_{{ form.tithe.name }}">Diezmo:</label>
+                                                    {{ form.tithe }}
+                                                </div>
+                                            </div>
+
+                                            {% for formset in inlines %}
+                                                {{ formset }}
+                                            {% endfor %}
+                                        </div>
+                                        <!-- /.card-body -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="text-right">
+                                <a href="{% url 'friendgroups:index' %}" class="btn btn-secondary float-left">Cancelar</a>
+                                <button type="submit" class="btn btn-primary float-right">Crear Nuevo Encuentro</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        </div>
+        <!-- /.card-footer -->
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+{% endblock content %}
+
+
+{% block bottom-plugins %}
+    {% include 'friendgroups/partials/datetimepicker-js.html' %}
+{% endblock bottom-plugins %}

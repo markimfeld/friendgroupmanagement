@@ -1,0 +1,22 @@
+{% load static %}
+<!-- InputMask -->
+<script src="{% static 'friendgroups/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'friendgroups/plugins/inputmask/min/jquery.inputmask.bundle.min.js' %}"></script>
+<!-- date-range-picker -->
+<script src="{% static 'friendgroups/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'friendgroups/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+<script>
+    $(document).ready(() => {
+        //Date range picker
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
+
+        //Timepicker
+        $('#timepicker').datetimepicker({
+          format: 'LT'
+        })
+    })
+</script>

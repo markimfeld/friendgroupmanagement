@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required, permission_required
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetFactory
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -15,7 +16,8 @@ from django.shortcuts import render, reverse
 
 # Create your views here.
 from .forms import (
-    PersonForm
+    PersonForm,
+    MeetingForm
 )
 from .models import (
     Meeting,
@@ -31,6 +33,18 @@ class MeetingListView(ListView):
     queryset = Meeting.objects.all().order_by('-date')
 
 
+class AttendanceInline(InlineFormSetFactory):
+    model = Attendance
+    fields = ['person', 'is_present']
+
+
+class MeetingCreateView(CreateWithInlinesView):
+    model = Meeting
+    inlines = [AttendanceInline]
+    form_class = MeetingForm
+    # fields = ['date', 'hour', 'topic', 'offering', 'tithe', 'group']
+    template_name = 'friendgroups/meeting-add.html'
+    success_url = reverse_lazy('friendgroups:meetings')
 
 
 @method_decorator(login_required, name='dispatch')

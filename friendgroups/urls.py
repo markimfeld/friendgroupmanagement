@@ -12,5 +12,6 @@ urlpatterns = [
     path('members/<int:pk>/update/', views.PersonUpdateView.as_view(), name='member-update'),
     path('members/<int:pk>/delete/', views.PersonDeleteView.as_view(), name='member-delete'),
     path('meetings/<int:pk>/detail/', views.MeetingDetailView.as_view(), name='meeting-detail'),
+    path('meetings/add/', views.MeetingCreateView.as_view(), name='meeting-add'),
     path('meetings/<int:pk>/delete/', views.MeetingDeleteView.as_view(), name='meeting-delete')
 ]
