@@ -1,6 +1,13 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.auth.decorators import login_required, permission_required
-from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetFactory
+from django.contrib.auth.decorators import (
+    login_required, 
+    permission_required
+)
+from extra_views import (
+    CreateWithInlinesView, 
+    UpdateWithInlinesView, 
+    InlineFormSetFactory
+)
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -49,6 +56,15 @@ class MeetingCreateView(PermissionRequiredMixin, CreateWithInlinesView):
     inlines = [AttendanceInline]
     form_class = MeetingForm
     template_name = 'friendgroups/meeting-add.html'
+    success_url = reverse_lazy('friendgroups:index')
+
+
+@method_decorator(login_required, name='dispatch')
+class MeetingUpdateView(UpdateWithInlinesView):
+    model = Meeting
+    inlines = [AttendanceInline]
+    form_class = MeetingForm
+    template_name = 'friendgroups/meeting-update.html'
     success_url = reverse_lazy('friendgroups:index')
 
 
