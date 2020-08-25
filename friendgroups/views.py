@@ -31,6 +31,8 @@ class MeetingListView(ListView):
     queryset = Meeting.objects.all().order_by('-date')
 
 
+
+
 @method_decorator(login_required, name='dispatch')
 class MeetingDetailView(DetailView):
     model = Meeting

@@ -9,47 +9,64 @@
 <div class="content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col">
+      <div class="col-12 col-md-5 col-lg-4">
+        <!-- Profile Image -->
         <div class="card">
-          <div class="card-body">
-              <h5 class="card-title text-bold">{{ object.topic }}</h5>
+          <div class="card-body box-profile">
+            <div class="text-center">
+            </div>
 
-            <p class="card-text">
-                {{ object.date }}
-            </p>
+            <h3 class="text-center h2">{{ object.topic }}</h3>
 
-            <table class="table table-bordered mb-3">
-                <thead>
-                    <tr>
-                        <th style="width: 10px">ID</th>
-                        <th>Nombre</th>
-                        <th>Progress</th>
-                        <th style="width: 40px">Asistencia</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for attendance in object.attendances.all %}
-                    <tr>
-                        <td>{{ attendance.id }}</td>
-                        <td>{{ attendance }}</td>
-                        <td>
-                            <div class="progress progress-xs">
-                                <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                            </div>
-                        </td>
-                        <td><span class="badge bg-danger">55%</span></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <p class="text-muted text-center">{{ object.date }}</p>
 
-            <a href="#" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i></a>
-            <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+            <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                    <b>Ofrenda</b> <a class="float-right">${{ object.offering }}</a>
+                </li>
+                <li class="list-group-item">
+                    <b>Diezmo</b> <a class="float-right">${{ object.tithe }}</a>
+                </li>
+                <li class="list-group-item">
+                    <b>Amigos</b> <a class="float-right">{{ object.group.persons.all.count }}</a>
+                </li>
+                <li class="list-group-item">
+                    <b>Horario</b> <a class="float-right">{{ object.hour }}hs</a>
+                </li>
+            </ul>
+
+            <a href="#" class="btn btn-secondary btn-block"><i class="fas fa-edit"></i> <b>Editar</b></a>
+            <a href="#" class="btn btn-danger btn-block"><i class="fas fa-trash"></i> <b>Eliminar</b></a>
           </div>
+          <!-- /.card-body -->
         </div>
-      </div>
+        <!-- /.card -->
+
+        </div>
+
+        <div class="col">
+        {% for attendance in object.attendances.all %}
+            <div class="card">
+                <div class="card-body">
+                    <div class="float-left">
+                        <span class="d-flex flex-column justify-content-start">
+                            <span><b>{{ attendance.person.first_name }} {{ attendance.person.last_name }}</b></span>
+                            <span>Categoria: {{ attendance.person.category }}</span>
+                            <span class="text-muted">Unido el: {{ attendance.person.joined_at }}</span>
+                        </span>
+                    </div>
+                    {% if attendance.is_present %}
+                        <span class="badge badge-success float-right"><i class="fas fa-check"></i></span>
+                    {% else %}
+                        <span class="badge badge-danger float-right"><i class="fas fa-times-circle"></i></span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        </div>
     </div>
     <!-- /.row -->
+
   </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->

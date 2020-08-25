@@ -23,8 +23,9 @@ class Category(models.Model):
 class Person(models.Model):
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
+    joined_at = models.DateField(auto_now_add=True)
     phone = models.CharField(max_length=100, blank=True, null=True)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='persons')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     
@@ -34,6 +35,7 @@ class Person(models.Model):
 
 class Meeting(models.Model):
     date = models.DateField()
+    hour = models.TimeField()
     topic = models.CharField(max_length=64)
     offering = models.FloatField()
     tithe = models.FloatField()
