@@ -43,7 +43,8 @@ class AttendanceInline(InlineFormSetFactory):
 
 
 @method_decorator(login_required, name='dispatch')
-class MeetingCreateView(CreateWithInlinesView):
+class MeetingCreateView(PermissionRequiredMixin, CreateWithInlinesView):
+    permission_required = 'friendgroups.can_add_meeting'
     model = Meeting
     inlines = [AttendanceInline]
     form_class = MeetingForm
