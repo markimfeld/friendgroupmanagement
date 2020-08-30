@@ -80,11 +80,10 @@
                                                     {{ form.tithe }}
                                                 </div>
                                             </div>
-
                                             {% for formset in inlines %}
                                                 {{ form.errors }}
                                                 {{ formset.management_form }}
-                                                <div class="row">
+                                                <div id="form_set" class="row">
                                                     {% for form in formset %}
                                                         {% for hidden in form.hidden_fields %}
                                                             {{ hidden }}
@@ -108,6 +107,25 @@
                                                             </div>
                                                         </div>
                                                     {% endfor %}
+                                                </div>
+                                                <input id="add_more" type="button" class="btn btn-link" value="Agregar más">
+                                                <div class="col-12" id="empty_form" style="display: none;">
+                                                    <div class="row">
+                                                        <div class="col-9 form-group">
+                                                            <label for="id_{{ formset.empty_form.person.name }}">Amigo:</label>
+                                                            {{ formset.empty_form.person|add_class:"form-control select2bs4" }}
+                                                        </div>
+                                                        <div class="col form-group">
+                                                            {{ formset.empty_form.is_present }}
+                                                            <label for="id_{{ form.is_present.name }}">Presente?</label>
+                                                        </div>
+                                                        <div class="col form-group">
+                                                            {% if formset.can_delete %}
+                                                            {{ formset.empty_form.DELETE }}
+                                                            <label for="id_{{ formset.empty_form.can_delete.name }}">¿Borrar?</label>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             {% endfor %}
                                         </div>
@@ -140,4 +158,5 @@
 
 {% block bottom-plugins %}
     {% include 'friendgroups/partials/datetimepicker-js.html' %}
+    {% include 'friendgroups/partials/add-form-formset.html' %}
 {% endblock bottom-plugins %}
