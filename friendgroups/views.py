@@ -8,6 +8,7 @@ from extra_views import (
     UpdateWithInlinesView, 
     InlineFormSetFactory
 )
+from django import forms
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -29,8 +30,24 @@ from .forms import (
 from .models import (
     Meeting,
     Person,
-    Attendance
+    Attendance,
+    Group
 )
+
+from django.utils.datastructures import MultiValueDict
+
+
+class AttendanceForm(forms.ModelForm):
+    class Meta:
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(AttendanceForm, self).__init__(*args, **kwargs)
+        self.fields['is_present'].initial = True
+        
+        members = Person.objects.all()
+        options = [(member.id, member.first_name) for member in members]
+        self.fields['person'].choices = options
 
 
 @method_decorator(login_required, name='dispatch')
@@ -42,12 +59,13 @@ class MeetingListView(ListView):
 
 class AttendanceInline(InlineFormSetFactory):
     model = Attendance
-    fields = ['person', 'is_present']
+    form_class = AttendanceForm
     factory_kwargs = {
-        'extra': 4,
+        'extra': Person.objects.count(),
         'can_delete': True
     }
 
+    
 
 @method_decorator(login_required, name='dispatch')
 class MeetingCreateView(PermissionRequiredMixin, CreateWithInlinesView):
