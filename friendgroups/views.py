@@ -25,7 +25,8 @@ from django.shortcuts import render, reverse
 # Create your views here.
 from .forms import (
     PersonForm,
-    MeetingForm
+    MeetingForm,
+    AttendanceForm
 )
 from .models import (
     Meeting,
@@ -37,17 +38,6 @@ from .models import (
 from django.utils.datastructures import MultiValueDict
 
 
-class AttendanceForm(forms.ModelForm):
-    class Meta:
-        fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-        super(AttendanceForm, self).__init__(*args, **kwargs)
-        self.fields['is_present'].initial = True
-        
-        members = Person.objects.all()
-        options = [(member.id, member.first_name) for member in members]
-        self.fields['person'].choices = options
 
 
 @method_decorator(login_required, name='dispatch')
@@ -61,7 +51,7 @@ class AttendanceInline(InlineFormSetFactory):
     model = Attendance
     form_class = AttendanceForm
     factory_kwargs = {
-        'extra': Person.objects.count(),
+        'extra': 1,
         'can_delete': True
     }
 

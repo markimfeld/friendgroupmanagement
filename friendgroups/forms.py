@@ -78,3 +78,8 @@ class PersonForm(forms.ModelForm):
                 }
             ),
         }
+
+
+class AttendanceForm(forms.ModelForm):
+    class Meta:
+        fields = '__all__'

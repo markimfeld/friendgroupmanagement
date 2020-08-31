@@ -96,10 +96,6 @@
                                                                     {{ form.person|add_class:"form-control select2bs4" }}
                                                                 </div>
                                                                 <div class="col form-group">
-                                                                    {{ form.is_present }}
-                                                                    <label for="id_{{ form.is_present.name }}">Presente?</label>
-                                                                </div>
-                                                                <div class="col form-group">
                                                                     {% if formset.can_delete %}
                                                                     {{ form.DELETE }}
                                                                     <label for="id_{{ form.can_delete.name }}">¿Borrar?</label>
