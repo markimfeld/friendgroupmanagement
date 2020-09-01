@@ -6,8 +6,9 @@ from . import views
 
 app_name='friendgroups'
 urlpatterns = [
-    path('', views.MeetingListView.as_view(),  name='index'),
-    path('members', views.PersonListView.as_view(), name='members'),
+    path('groups/', views.GroupListView.as_view(),  name='groups'),
+    path('meetings/', views.MeetingListView.as_view(),  name='meetings'),
+    path('members/', views.PersonListView.as_view(), name='members'),
     path('new-member/', views.PersonCreateView.as_view(), name='member-add'),
     path('members/<int:pk>/update/', views.PersonUpdateView.as_view(), name='member-update'),
     path('members/<int:pk>/delete/', views.PersonDeleteView.as_view(), name='member-delete'),

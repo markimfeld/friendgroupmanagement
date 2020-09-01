@@ -38,6 +38,10 @@ from .models import (
 from django.utils.datastructures import MultiValueDict
 
 
+@method_decorator(login_required, name='dispatch')
+class GroupListView(ListView):
+    model = Group
+    template_name = 'friendgroups/groups.html'
 
 
 @method_decorator(login_required, name='dispatch')
