@@ -7,6 +7,8 @@ class Group(models.Model):
     active_since = models.DateField(auto_now_add=True)
     inactive_since = models.DateField(blank=True, null=True)
     status = models.BooleanField(default=True)
+    address = models.CharField(max_length=100)
+    neighborhood = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name

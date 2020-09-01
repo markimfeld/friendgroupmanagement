@@ -10,23 +10,39 @@
 <div class="content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col">
         {% for group in object_list %}
-        <div class="card">
-          <div class="card-body">
-              <h5 class="card-title text-bold">{{ group }}</h5>
+            <div class="col-12 col-sm-6 col-lg-4">
+              <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title text-bold">{{ group }}</h5>
+                    <span class="badge badge-dark float-right">Activo</span>
+                </div>
 
-            <p class="card-text">
-                {{ meeting.date }}
-            </p>
+                <div class="card-body">
 
-            <a href="" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
-            <a href="" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i></a>
-            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
-          </div>
-        </div>
+                    <ul class="list-group-flush p-0">
+                        <li class="list-group-item text-muted">
+                            <i class="fas fa-calendar-day"></i><b> Inicio:</b> {{ group.active_since }}
+                        </li>
+
+                        <li class="list-group-item text-muted">
+                            <i class="fas fa-map-marker-alt"></i><b> Direccion:</b> {{ group.address }}
+                        </li>
+
+                        <li class="list-group-item text-muted">
+                            <i class="fas fa-city"></i><b> Barrio:</b> {{ group.neighborhood }}
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="card-footer">
+                    <a href="" class="btn btn-primary float-right"><i class="fas fa-eye"></i></a>
+                    <a href="" class="btn btn-secondary float-right mr-1"><i class="fas fa-edit"></i></a>
+                    <a href="" class="btn btn-danger float-right mr-1"><i class="fas fa-trash"></i></a>
+                </div>
+              </div>
+            </div>
         {% endfor %}
-      </div>
     </div>
     <!-- /.row -->
   </div><!-- /.container-fluid -->
