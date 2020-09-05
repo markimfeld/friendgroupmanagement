@@ -1,7 +1,18 @@
 from django import forms
 
 
-from .models import Person, Meeting
+from .models import Person, Meeting, Group
+
+
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = '__all__'
+        labels = { 
+            'name': 'Nombre',
+            'address': 'Direccion',
+            'neighborhood': 'Barrio'
+        }
 
 
 class MeetingForm(forms.ModelForm):
@@ -47,6 +58,15 @@ class MeetingForm(forms.ModelForm):
             )
         }
 
+    def __init__(self, *args, **kwargs):
+        super(MeetingForm, self).__init__(*args, **kwargs)
+
+        initial = kwargs.get('initial')
+
+        self.fields['group'].queryset = Group.objects.filter(pk=initial.get('group').id)
+
+
+
 class PersonForm(forms.ModelForm):
     class Meta:
         model = Person
@@ -83,3 +103,8 @@ class PersonForm(forms.ModelForm):
 class AttendanceForm(forms.ModelForm):
     class Meta:
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(AttendanceForm, self).__init__(*args, **kwargs)
+
+        # self.fields['person'].queryset = Person.objects.filter(group__pk=2).all()
