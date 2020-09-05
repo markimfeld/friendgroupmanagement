@@ -69,7 +69,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row mb-3">
                                                 <div class="col-12 col-md-6 from-group">
                                                     <label for="id_{{ form.offering.name }}">Ofrenda:</label>
                                                     {{ form.offering }}
@@ -81,52 +81,66 @@
                                                 </div>
                                             </div>
                                             {% for formset in inlines %}
-                                                {{ form.errors }}
                                                 {{ formset.management_form }}
                                                 <div id="form_set" class="row">
                                                     {% for form in formset %}
+                                                        {{ form.errors }}
+                                                         {{form.non_field_errors}}
                                                         {% for hidden in form.hidden_fields %}
                                                             {{ hidden }}
                                                         {% endfor %}
-                                                        <div class="col-12">
+                                                        <div  class="col-12">
                                                             <div class="row">
-                                                                <div class="col-9 form-group">
-                                                                    <label for="id_{{ form.person.name }}">Amigo:</label>
-                                                                    {{ form.person|add_class:"form-control select2bs4" }}
-                                                                </div>
-                                                                <div class="col form-group">
-                                                                    {{ form.is_present }}
-                                                                    <label for="id_{{ form.is_present.name }}">Presente?</label>
-                                                                </div>
-                                                                <div class="col form-group">
-                                                                    {% if formset.can_delete %}
-                                                                    {{ form.DELETE }}
-                                                                    <label for="id_{{ form.can_delete.name }}">¿Borrar?</label>
-                                                                    {% endif %}
+                                                                <div class="col card">
+                                                                    <div class="row card-body d-flex align-items-center">
+                                                                        <div class="col form-group">
+                                                                            <label for="id_{{ form.person.name }}">Amigo:</label>
+                                                                            {{ form.person|add_class:"form-control select2bs4" }}
+                                                                        </div>
+
+                                                                        <div class="col form-group form-check">
+                                                                            {{ form.is_present|add_class:"form-check-input" }}
+                                                                            <label class="form-check-label"  for="id_{{ form.is_present.name }}">¿Presente?</label>
+                                                                        </div>
+
+                                                                        <div class="col form-group form-check">
+                                                                            {% if formset.can_delete %}
+                                                                            {{ form.DELETE|add_class:"form-check-input" }}
+                                                                            <label class="form-check-label" for="id_{{ form.can_delete.name }}">¿Borrar?</label>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     {% endfor %}
                                                 </div>
-                                                <input id="add_more" type="button" class="btn btn-link" value="Agregar más">
-                                                <div class="col-12" id="empty_form" style="display: none;">
-                                                    <div class="row">
-                                                        <div class="col-9 form-group">
-                                                            <label for="id_{{ formset.empty_form.person.name }}">Amigo:</label>
-                                                            {{ formset.empty_form.person|add_class:"form-control select2bs4" }}
-                                                        </div>
-                                                        <div class="col form-group">
-                                                            {{ formset.empty_form.is_present }}
-                                                            <label for="id_{{ form.is_present.name }}">Presente?</label>
-                                                        </div>
-                                                        <div class="col form-group">
-                                                            {% if formset.can_delete %}
-                                                            {{ formset.empty_form.DELETE }}
-                                                            <label for="id_{{ formset.empty_form.can_delete.name }}">¿Borrar?</label>
-                                                            {% endif %}
+                                                
+                                                <input id="add_more" type="button" class="btn btn-link" value="Agregar más campos">
+                                                <!-- EMPTYFORM -->
+                                                <div id="empty_form" style="display:none;">
+                                                    <div class="col card">
+                                                        <div class="row card-body d-flex align-items-center">
+                                                            <div class="col form-group">
+                                                                <label for="id_{{ formset.empty_form.person.name }}">Amigo:</label>
+                                                                {{ formset.empty_form.person|add_class:"form-control select2bs4" }}
+                                                            </div>
+
+                                                            <div class="col form-group form-check">
+                                                                {{ formset.empty_form.is_present|add_class:"form-check-input" }}
+                                                                <label class="form-check-label"  for="id_{{ formset.empty_form.is_present.name }}">¿Presente?</label>
+                                                            </div>
+
+                                                            <div class="col form-group form-check">
+                                                                {% if formset.can_delete %}
+                                                                {{ formset.empty_form.DELETE|add_class:"form-check-input" }}
+                                                                <label class="form-check-label" for="id_{{ formset.empty_form.can_delete.name }}">¿Borrar?</label>
+                                                                {% endif %}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- / EMPTYFORM -->
                                             {% endfor %}
                                         </div>
                                         <!-- /.card-body -->
@@ -158,5 +172,5 @@
 
 {% block bottom-plugins %}
     {% include 'friendgroups/partials/datetimepicker-js.html' %}
-    {% include 'friendgroups/partials/add-form-formset.html' %}
+    {% include 'friendgroups/partials/add-form.html' %}
 {% endblock bottom-plugins %}
