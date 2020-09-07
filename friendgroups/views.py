@@ -58,6 +58,14 @@ class GroupCreateView(CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+class GroupUpdateView(UpdateView):
+    model = Group
+    form_class = GroupForm
+    template_name = 'friendgroups/group-update.html'
+    success_url = reverse_lazy('friendgroups:groups')
+
+
+@method_decorator(login_required, name='dispatch')
 class GroupDeleteView(DeleteView):
     model = Group
     template_name = 'friendgroups/group-delete.html'

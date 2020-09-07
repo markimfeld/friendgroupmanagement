@@ -9,6 +9,7 @@ urlpatterns = [
     path('', views.DashBoardView.as_view(), name='index'),
     path('groups/', views.GroupListView.as_view(),  name='groups'),
     path('new-group/', views.GroupCreateView.as_view(), name='group-add'),
+    path('groups/<int:pk>/update/', views.GroupUpdateView.as_view(), name='group-update'),
     path('groups/<int:pk>/delete/', views.GroupDeleteView.as_view(), name='group-delete'),
     path('groups/<int:pk>/meetings/', views.MeetingListView.as_view(),  name='meetings'),
     path('members/', views.PersonListView.as_view(), name='members'),
