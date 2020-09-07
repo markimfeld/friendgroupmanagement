@@ -91,6 +91,14 @@ class AttendanceInline(InlineFormSetFactory):
         'extra': 1,
         'can_delete': True
     }
+    formset_kwargs = {'form_kwargs': {'initial': {'group_pk': None}}}
+
+    def get_formset_kwargs(self):
+        kwargs = super(AttendanceInline, self).get_formset_kwargs()
+        group = get_object_or_404(Group, pk=self.kwargs.get('pk'))
+        group_pk = {'group_pk': group.pk}
+        kwargs['form_kwargs'].update({'initial': group_pk}) 
+        return kwargs
 
 
 @method_decorator(login_required, name='dispatch')
