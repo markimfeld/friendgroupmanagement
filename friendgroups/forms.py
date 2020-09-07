@@ -109,6 +109,5 @@ class AttendanceForm(forms.ModelForm):
         super(AttendanceForm, self).__init__(*args, **kwargs)
 
         pk_group = kwargs.pop('initial')
-        print(pk_group['group_pk'])
         
         self.fields['person'].queryset = Person.objects.filter(group__pk=pk_group['group_pk']).all()

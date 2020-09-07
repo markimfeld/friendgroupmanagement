@@ -152,7 +152,10 @@ class MeetingDetailView(DetailView):
 class MeetingDeleteView(DeleteView):
     model = Meeting
     template_name = 'friendgroups/meeting-delete.html'
-    success_url = reverse_lazy('friendgroups:groups')
+
+    def get_success_url(self):
+        group_pk = self.kwargs.get('group_pk')
+        return reverse_lazy('friendgroups:meetings', args=(group_pk, ))
 
 
 @method_decorator(login_required, name='dispatch')
