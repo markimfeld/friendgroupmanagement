@@ -104,7 +104,7 @@ class AttendanceForm(forms.ModelForm):
     class Meta:
         fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self,  *args, **kwargs):
         super(AttendanceForm, self).__init__(*args, **kwargs)
-
+        
         # self.fields['person'].queryset = Person.objects.filter(group__pk=2).all()

@@ -94,6 +94,10 @@ class MeetingCreateView(PermissionRequiredMixin, CreateWithInlinesView):
     template_name = 'friendgroups/meeting-add.html'
     group = None
 
+    def __init__(self, *arg, **kwargs):
+        super(MeetingCreateView, self).__init__(*arg, **kwargs)
+        print(kwargs.get('pk'))
+
     def get_initial(self):
         self.group = get_object_or_404(Group, pk=self.kwargs.get('pk'))
         return {'group': self.group, }
@@ -110,7 +114,16 @@ class MeetingUpdateView(UpdateWithInlinesView):
     inlines = [AttendanceInline]
     form_class = MeetingForm
     template_name = 'friendgroups/meeting-update.html'
-    success_url = reverse_lazy('friendgroups:index')
+
+
+    def get_initial(self):
+        self.group = get_object_or_404(Group, pk=self.kwargs.get('id'))
+        return {'group': self.group, }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['group'] = get_object_or_404(Group, pk=self.kwargs.get('id'))
+        return context
 
 
 @method_decorator(login_required, name='dispatch')
