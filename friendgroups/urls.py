@@ -17,7 +17,7 @@ urlpatterns = [
     path('members/<int:pk>/update/', views.PersonUpdateView.as_view(), name='member-update'),
     path('members/<int:pk>/delete/', views.PersonDeleteView.as_view(), name='member-delete'),
     path('meetings/<int:pk>/detail/', views.MeetingDetailView.as_view(), name='meeting-detail'),
-    path('groups/<int:id>/meetings/<int:pk>/update/', views.MeetingUpdateView.as_view(), name='meeting-update'),
+    path('groups/<int:group_pk>/meetings/<int:pk>/update/', views.MeetingUpdateView.as_view(), name='meeting-update'),
     path('groups/<int:pk>/meetings/new-meeting/', views.MeetingCreateView.as_view(), name='meeting-add'),
     path('meetings/<int:pk>/delete/', views.MeetingDeleteView.as_view(), name='meeting-delete')
 ]

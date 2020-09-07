@@ -125,12 +125,12 @@ class MeetingUpdateView(UpdateWithInlinesView):
 
 
     def get_initial(self):
-        self.group = get_object_or_404(Group, pk=self.kwargs.get('id'))
+        self.group = get_object_or_404(Group, pk=self.kwargs.get('group_pk'))
         return {'group': self.group, }
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['group'] = get_object_or_404(Group, pk=self.kwargs.get('id'))
+        context['group'] = get_object_or_404(Group, pk=self.kwargs.get('group_pk'))
         return context
 
 
