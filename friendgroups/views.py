@@ -110,10 +110,6 @@ class MeetingCreateView(PermissionRequiredMixin, CreateWithInlinesView):
     template_name = 'friendgroups/meeting-add.html'
     group = None
 
-    def __init__(self, *arg, **kwargs):
-        super(MeetingCreateView, self).__init__(*arg, **kwargs)
-        print(kwargs.get('pk'))
-
     def get_initial(self):
         self.group = get_object_or_404(Group, pk=self.kwargs.get('pk'))
         return {'group': self.group, }

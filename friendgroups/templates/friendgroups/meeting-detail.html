@@ -35,11 +35,14 @@
                 </li>
             </ul>
 
+            <a class="btn btn-primary btn-block" href="{% url 'friendgroups:meeting-update' group_pk=object.group.id pk=object.id %}"><i class="fas fa-edit"></i> Editar</a>
+            <a class="btn btn-danger btn-block" href="{% url 'friendgroups:meeting-delete' group_pk=object.group.id pk=object.id %}"><i class="fas fa-trash"></i> Borrar</a>
+            <a class="btn btn-secondary btn-block" href="{% url 'friendgroups:meetings' object.group.id %}">Volver</a>
+
           </div>
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
-        <a class="btn btn-secondary" href="{% url 'friendgroups:meetings' object.group.id %}">Volver</a>
 
         </div>
 
