@@ -102,8 +102,7 @@ class AttendanceInline(InlineFormSetFactory):
 
 
 @method_decorator(login_required, name='dispatch')
-class MeetingCreateView(PermissionRequiredMixin, CreateWithInlinesView):
-    permission_required = 'friendgroups.can_add_meeting'
+class MeetingCreateView(CreateWithInlinesView):
     model = Meeting
     inlines = [AttendanceInline]
     form_class = MeetingForm
@@ -161,8 +160,7 @@ class PersonListView(ListView):
 
 
 @method_decorator(login_required, name='dispatch')
-class PersonCreateView(PermissionRequiredMixin, CreateView):
-    permission_required = 'friendgroups.can_add_person'
+class PersonCreateView(CreateView):
     model = Person
     template_name = 'friendgroups/member-add.html'
     form_class = PersonForm
@@ -170,8 +168,7 @@ class PersonCreateView(PermissionRequiredMixin, CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class PersonUpdateView(PermissionRequiredMixin, UpdateView):
-    permission_required = 'friendgroups.can_edit_person'
+class PersonUpdateView(UpdateView):
     model = Person
     template_name = 'friendgroups/member-edit.html'
     form_class = PersonForm
@@ -179,8 +176,7 @@ class PersonUpdateView(PermissionRequiredMixin, UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class PersonDeleteView(PermissionRequiredMixin, DeleteView):
-    permission_required = 'friendgroups.can_delete_person'
+class PersonDeleteView(DeleteView):
     model = Person
     template_name = 'friendgroups/member-delete.html'
     success_url = reverse_lazy('friendgroups:members')
