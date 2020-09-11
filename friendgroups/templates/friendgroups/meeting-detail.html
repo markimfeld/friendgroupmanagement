@@ -28,19 +28,20 @@
                     <b>Diezmo</b> <a class="float-right">${{ object.tithe }}</a>
                 </li>
                 <li class="list-group-item">
-                    <b>Asistencia total: </b> <a class="float-right">{{ object.person.count }}</a>
+                    <b>Asistencia total: </b> <a class="float-right">{{ object.person.count }} / {{ object.group.persons.count }}</a>
                 </li>
                 <li class="list-group-item">
                     <b>Horario</b> <a class="float-right">{{ object.hour }}hs</a>
                 </li>
             </ul>
 
-            <a href="#" class="btn btn-secondary btn-block"><i class="fas fa-edit"></i> <b>Editar</b></a>
-            <a href="#" class="btn btn-danger btn-block"><i class="fas fa-trash"></i> <b>Eliminar</b></a>
+            <a href="{% url 'friendgroups:meeting-update' object.id %}" class="btn btn-secondary btn-block"><i class="fas fa-edit"></i> <b>Editar</b></a>
+            <a href="{% url 'friendgroups:meeting-delete' object.id %}" class="btn btn-danger btn-block"><i class="fas fa-trash"></i> <b>Eliminar</b></a>
           </div>
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
+        <a class="btn btn-secondary" href="{% url 'friendgroups:meetings' object.group.id %}">Volver</a>
 
         </div>
 
@@ -55,11 +56,6 @@
                             <span class="text-muted">Unido el: {{ attendance.person.joined_at }}</span>
                         </span>
                     </div>
-                    {% if attendance.is_present %}
-                        <span class="badge badge-success float-right"><i class="fas fa-check"></i></span>
-                    {% else %}
-                        <span class="badge badge-danger float-right"><i class="fas fa-times-circle"></i></span>
-                    {% endif %}
                 </div>
             </div>
         {% endfor %}

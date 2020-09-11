@@ -2,7 +2,6 @@
 
 {% block page-header %}
     <h3 class="d-inline">Encuentros</h3>
-    <a class="btn btn-success float-right" href="{% url 'friendgroups:meeting-add' %}"><i class="fas fa-users"></i> Nuevo Encuentro</a>
 {% endblock page-header %}
 
 {% block content %}
@@ -25,9 +24,17 @@
             <a href="{% url 'friendgroups:meeting-delete' meeting.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
           </div>
         </div>
+        {% empty %}
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text">No hay meetings...</p>
+            </div>
+        </div>
         {% endfor %}
       </div>
     </div>
+    <a class="btn btn-secondary mb-3" href="{% url 'friendgroups:groups'  %}">Volver</a>
+    <a class="btn btn-success float-right mb-3" href="{% url 'friendgroups:meeting-add' group.id %}"><i class="fas fa-users"></i> Nuevo Encuentro</a>
     <!-- /.row -->
   </div><!-- /.container-fluid -->
 </div>

@@ -1,0 +1,52 @@
+{% extends 'friendgroups/base.html' %}
+
+{% block page-header %}
+    <h3 class="d-inline">Grupos</h3>
+    <a class="btn btn-success float-right" href="{% url 'friendgroups:group-add' %}"><i class="fas fa-users"></i> Nuevo Grupo</a>
+{% endblock page-header %}
+
+{% block content %}
+<!-- Main content -->
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+        {% for group in object_list %}
+            <div class="col-12 col-sm-6 col-lg-4">
+              <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title text-bold">{{ group }}</h5>
+                    <span class="badge badge-dark float-right">Activo</span>
+                </div>
+
+                <div class="card-body">
+
+                    <ul class="list-group-flush p-0">
+                        <li class="list-group-item text-muted">
+                            <i class="fas fa-calendar-day"></i><b> Inicio:</b> {{ group.active_since }}
+                        </li>
+
+                        <li class="list-group-item text-muted">
+                            <i class="fas fa-map-marker-alt"></i><b> Direccion:</b> {{ group.address }}
+                        </li>
+
+                        <li class="list-group-item text-muted">
+                            <i class="fas fa-city"></i><b> Barrio:</b> {{ group.neighborhood }}
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'friendgroups:meetings' group.id %}" class="btn btn-primary float-right"><i class="fas fa-eye"></i></a>
+                    <a href="" class="btn btn-secondary float-right mr-1"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'friendgroups:group-delete' group.id %}" class="btn btn-danger float-right mr-1"><i class="fas fa-trash"></i></a>
+                </div>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+    <!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+
+{% endblock content %}

@@ -1,9 +1,15 @@
 from django.db import models
+from django.shortcuts import reverse
 
 # Create your models here.
 
 class Group(models.Model):
     name = models.CharField(max_length=100)
+    active_since = models.DateField(auto_now_add=True)
+    inactive_since = models.DateField(blank=True, null=True)
+    status = models.BooleanField(default=True)
+    address = models.CharField(max_length=100)
+    neighborhood = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -41,6 +47,9 @@ class Meeting(models.Model):
     tithe = models.FloatField()
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     person = models.ManyToManyField(Person, through='Attendance')
+    
+    def get_absolute_url(self):
+        return reverse('friendgroups:meeting-detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.topic
@@ -49,7 +58,7 @@ class Meeting(models.Model):
 class Attendance(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, related_name="attendances")
-    is_present = models.BooleanField(default=False)
+    # is_present = models.BooleanField(default=False)
 
     def __str__(self):
         return self.person.first_name

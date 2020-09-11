@@ -17,15 +17,18 @@ from django.views.generic.edit import (
     UpdateView,
     DeleteView
 )
+from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, get_object_or_404
 
 
 # Create your views here.
 from .forms import (
     PersonForm,
-    MeetingForm
+    MeetingForm,
+    AttendanceForm,
+    GroupForm
 )
 from .models import (
     Meeting,
@@ -34,38 +37,58 @@ from .models import (
     Group
 )
 
-from django.utils.datastructures import MultiValueDict
 
 
-class AttendanceForm(forms.ModelForm):
-    class Meta:
-        fields = '__all__'
+@method_decorator(login_required, name='dispatch')
+class DashBoardView(TemplateView):
+    template_name = 'friendgroups/index.html'
 
-    def __init__(self, *args, **kwargs):
-        super(AttendanceForm, self).__init__(*args, **kwargs)
-        self.fields['is_present'].initial = True
-        
-        members = Person.objects.all()
-        options = [(member.id, member.first_name) for member in members]
-        self.fields['person'].choices = options
+
+@method_decorator(login_required, name='dispatch')
+class GroupListView(ListView):
+    model = Group
+    template_name = 'friendgroups/groups.html'
+
+
+@method_decorator(login_required, name='dispatch')
+class GroupCreateView(CreateView):
+    model = Group
+    form_class = GroupForm
+    template_name = 'friendgroups/group-add.html'
+    success_url = reverse_lazy('friendgroups:groups')
+
+
+@method_decorator(login_required, name='dispatch')
+class GroupDeleteView(DeleteView):
+    model = Group
+    template_name = 'friendgroups/group-delete.html'
+    success_url = reverse_lazy('friendgroups:groups')
 
 
 @method_decorator(login_required, name='dispatch')
 class MeetingListView(ListView):
     model = Meeting
     template_name = 'friendgroups/meetings.html'
-    queryset = Meeting.objects.all().order_by('-date')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object_list'] = Meeting.objects.filter(group__pk=self.kwargs.get('pk')).all()
+        context['group'] = get_object_or_404(Group, pk=self.kwargs.get('pk'))
+        return context
 
 
 class AttendanceInline(InlineFormSetFactory):
     model = Attendance
     form_class = AttendanceForm
     factory_kwargs = {
-        'extra': Person.objects.count(),
+        'extra': 1,
         'can_delete': True
     }
 
-    
+    def get_queryset(self):
+        group_id = self.kwargs.get('pk')
+        return super(AttendanceInline, self).get_queryset().filter(group__pk=group_id)
+
 
 @method_decorator(login_required, name='dispatch')
 class MeetingCreateView(PermissionRequiredMixin, CreateWithInlinesView):
@@ -74,7 +97,19 @@ class MeetingCreateView(PermissionRequiredMixin, CreateWithInlinesView):
     inlines = [AttendanceInline]
     form_class = MeetingForm
     template_name = 'friendgroups/meeting-add.html'
-    success_url = reverse_lazy('friendgroups:index')
+    group = None
+
+    def get(self):
+        pass
+
+    def get_initial(self):
+        self.group = get_object_or_404(Group, pk=self.kwargs.get('pk'))
+        return {'group': self.group, }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['group'] = get_object_or_404(Group, pk=self.kwargs.get('pk'))
+        return context
 
 
 @method_decorator(login_required, name='dispatch')
@@ -96,7 +131,7 @@ class MeetingDetailView(DetailView):
 class MeetingDeleteView(DeleteView):
     model = Meeting
     template_name = 'friendgroups/meeting-delete.html'
-    success_url = reverse_lazy('friendgroups:index')
+    success_url = reverse_lazy('friendgroups:groups')
 
 
 @method_decorator(login_required, name='dispatch')
