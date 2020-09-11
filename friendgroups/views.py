@@ -114,9 +114,6 @@ class MeetingCreateView(CreateWithInlinesView):
     template_name = 'friendgroups/meeting-add.html'
     group = None
 
-    def get(self):
-        pass
-
     def get_initial(self):
         self.group = get_object_or_404(Group, pk=self.kwargs.get('pk'))
         return {'group': self.group, }
