@@ -59,6 +59,14 @@ class GroupCreateView(CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+class GroupUpdateView(UpdateView):
+    model = Group
+    form_class = GroupForm
+    template_name = 'friendgroups/group-update.html'
+    success_url = reverse_lazy('friendgroups:groups')
+
+
+@method_decorator(login_required, name='dispatch')
 class GroupDeleteView(DeleteView):
     model = Group
     template_name = 'friendgroups/group-delete.html'
@@ -84,6 +92,14 @@ class AttendanceInline(InlineFormSetFactory):
         'extra': 1,
         'can_delete': True
     }
+    formset_kwargs = {'form_kwargs': {'initial': {'group_pk': None}}}
+
+    def get_formset_kwargs(self):
+        kwargs = super(AttendanceInline, self).get_formset_kwargs()
+        group = get_object_or_404(Group, pk=self.kwargs.get('pk'))
+        group_pk = {'group_pk': group.pk}
+        kwargs['form_kwargs'].update({'initial': group_pk}) 
+        return kwargs
 
     def get_queryset(self):
         group_id = self.kwargs.get('pk')
@@ -91,8 +107,7 @@ class AttendanceInline(InlineFormSetFactory):
 
 
 @method_decorator(login_required, name='dispatch')
-class MeetingCreateView(PermissionRequiredMixin, CreateWithInlinesView):
-    permission_required = 'friendgroups.can_add_meeting'
+class MeetingCreateView(CreateWithInlinesView):
     model = Meeting
     inlines = [AttendanceInline]
     form_class = MeetingForm
@@ -118,7 +133,16 @@ class MeetingUpdateView(UpdateWithInlinesView):
     inlines = [AttendanceInline]
     form_class = MeetingForm
     template_name = 'friendgroups/meeting-update.html'
-    success_url = reverse_lazy('friendgroups:index')
+
+
+    def get_initial(self):
+        self.group = get_object_or_404(Group, pk=self.kwargs.get('group_pk'))
+        return {'group': self.group, }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['group'] = get_object_or_404(Group, pk=self.kwargs.get('group_pk'))
+        return context
 
 
 @method_decorator(login_required, name='dispatch')
@@ -131,7 +155,10 @@ class MeetingDetailView(DetailView):
 class MeetingDeleteView(DeleteView):
     model = Meeting
     template_name = 'friendgroups/meeting-delete.html'
-    success_url = reverse_lazy('friendgroups:groups')
+
+    def get_success_url(self):
+        group_pk = self.kwargs.get('group_pk')
+        return reverse_lazy('friendgroups:meetings', args=(group_pk, ))
 
 
 @method_decorator(login_required, name='dispatch')
@@ -141,8 +168,7 @@ class PersonListView(ListView):
 
 
 @method_decorator(login_required, name='dispatch')
-class PersonCreateView(PermissionRequiredMixin, CreateView):
-    permission_required = 'friendgroups.can_add_person'
+class PersonCreateView(CreateView):
     model = Person
     template_name = 'friendgroups/member-add.html'
     form_class = PersonForm
@@ -150,8 +176,7 @@ class PersonCreateView(PermissionRequiredMixin, CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class PersonUpdateView(PermissionRequiredMixin, UpdateView):
-    permission_required = 'friendgroups.can_edit_person'
+class PersonUpdateView(UpdateView):
     model = Person
     template_name = 'friendgroups/member-edit.html'
     form_class = PersonForm
@@ -159,8 +184,7 @@ class PersonUpdateView(PermissionRequiredMixin, UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class PersonDeleteView(PermissionRequiredMixin, DeleteView):
-    permission_required = 'friendgroups.can_delete_person'
+class PersonDeleteView(DeleteView):
     model = Person
     template_name = 'friendgroups/member-delete.html'
     success_url = reverse_lazy('friendgroups:members')

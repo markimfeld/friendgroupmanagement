@@ -1,7 +1,7 @@
 from django import forms
 
 
-from .models import Person, Meeting, Group
+from .models import Person, Meeting, Group, Attendance
 
 
 class GroupForm(forms.ModelForm):
@@ -102,8 +102,12 @@ class PersonForm(forms.ModelForm):
 
 class AttendanceForm(forms.ModelForm):
     class Meta:
+        model = Attendance
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(AttendanceForm, self).__init__(*args, **kwargs)
 
+        pk_group = kwargs.pop('initial')
+        
+        self.fields['person'].queryset = Person.objects.filter(group__pk=pk_group['group_pk']).all()
