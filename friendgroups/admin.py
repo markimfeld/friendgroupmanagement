@@ -1,7 +1,14 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Group, Person, Category, Meeting, Attendance
+from .models import (
+    Group, 
+    Person, 
+    Category, 
+    Meeting, 
+    Attendance,
+    Profile
+)
 
 
 class AttendanceInline(admin.TabularInline):
@@ -19,3 +26,4 @@ admin.site.register(Person)
 admin.site.register(Category)
 admin.site.register(Meeting, MeetingAdmin)
 admin.site.register(Attendance)
+admin.site.register(Profile)

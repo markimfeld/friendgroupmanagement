@@ -34,7 +34,8 @@ from .models import (
     Meeting,
     Person,
     Attendance,
-    Group
+    Group,
+    Profile
 )
 
 
@@ -48,6 +49,13 @@ class DashBoardView(TemplateView):
 class GroupListView(ListView):
     model = Group
     template_name = 'friendgroups/groups.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        user = self.request.user
+        profile = Profile.objects.get(user=user)
+        group_pk = profile.group.pk
+        return qs.filter(id=group_pk)
 
 
 @method_decorator(login_required, name='dispatch')
