@@ -1,0 +1,64 @@
+{% extends 'friendgroups/base.html' %}
+
+{% load static %}
+
+{% block page-header %}
+    <h1 class="m-0 text-dark d-inline">Lideres</h1>
+    <a class="btn btn-success float-right" href="{% url 'accounts:user-add' %}"><i class="fas fa-user-plus"></i> Nuevo Lider</a>
+{% endblock page-header%}
+
+
+{% block content %}
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="card card-solid">
+        <div class="card-body pb-0">
+            <div class="row d-flex align-items-stretch">
+                {% for leader in object_list %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card bg-light">
+                        <div class="card-header text-muted border-bottom-0">
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h2 class="lead"><b>{{ leader.user.first_name }} {{ leader.user.last_name }}</b></h2>
+                                    <ul class="m-0 fa-ul text-muted">
+                                        {% for group in leader.group.all %}
+                                        <li class="small p-0 m-0">
+                                            {{ group }}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="col-5 text-center">
+                                    <img src="{% static 'friendgroups/dist/img/user1-128x128.jpg' %}" alt="" class="img-circle img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="text-right">
+                                <a href="#" class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="#" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        </div>
+        <!-- /.card-footer -->
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+{% endblock content %}

@@ -1,6 +1,5 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.auth.decorators import (
-    login_required, 
+from django.contrib.auth.decorators import ( login_required, 
     permission_required
 )
 from extra_views import (
@@ -195,3 +194,19 @@ class PersonDeleteView(DeleteView):
     model = Person
     template_name = 'friendgroups/member-delete.html'
     success_url = reverse_lazy('friendgroups:members')
+
+
+@method_decorator(login_required, name='dispatch')
+class LeaderListView(ListView):
+    model = Profile
+    template_name = 'friendgroups/leaders.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        user = self.request.user
+        if user.is_staff:
+            qs = qs.exclude(user=user)
+
+        return qs
+
+

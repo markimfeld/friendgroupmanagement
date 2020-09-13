@@ -65,8 +65,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-              <a href="{% url 'friendgroups:groups' %}" class="nav-link">
+              <a href="{% url 'friendgroups:index' %}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Escritorio
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+              <a href="{% url 'friendgroups:groups' %}" class="nav-link">
+              <i class="nav-icon fas fa-home"></i>
               <p>
                 Grupos
               </p>
@@ -81,10 +89,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
+              <a href="{% url 'friendgroups:leaders' %}" class="nav-link">
+              <i class="nav-icon fas fa-user-tie"></i>
+              <p>
+                Lideres
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
               <a href="{% url 'friendgroups:members' %}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
-                Miembros
+                Amigos
               </p>
             </a>
           </li>
