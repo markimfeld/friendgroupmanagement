@@ -53,9 +53,8 @@ class GroupListView(ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         user = self.request.user
-        profile = Profile.objects.get(user=user)
-        group_pk = profile.group.pk
-        return qs.filter(id=group_pk)
+        qs = user.profile.group.all()
+        return qs
 
 
 @method_decorator(login_required, name='dispatch')

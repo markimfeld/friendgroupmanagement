@@ -20,7 +20,7 @@ class Group(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)   
-    group = models.ForeignKey(Group, on_delete=models.CASCADE, blank=True, null=True, related_name='user')
+    group = models.ManyToManyField(Group)
 
     def __str__(self):
         return self.user.username
