@@ -85,9 +85,12 @@ class MeetingListView(ListView):
     model = Meeting
     template_name = 'friendgroups/meetings.html'
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(group__pk=self.kwargs.get('pk')).all()
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_list'] = Meeting.objects.filter(group__pk=self.kwargs.get('pk')).all()
         context['group'] = get_object_or_404(Group, pk=self.kwargs.get('pk'))
         return context
 
