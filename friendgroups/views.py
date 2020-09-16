@@ -197,8 +197,9 @@ class PersonDeleteView(DeleteView):
 
 
 @method_decorator(login_required, name='dispatch')
-class LeaderListView(ListView):
+class LeaderListView(PermissionRequiredMixin, ListView):
     model = Profile
+    permission_required = 'can_view_profile'
     template_name = 'friendgroups/leaders.html'
 
     def get_queryset(self):
